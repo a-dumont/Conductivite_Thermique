@@ -28,6 +28,7 @@ axis_labels["dTy/dTx"] = r"$\Delta T_{\rm y}/\Delta T_{\rm x}$ ( % )"
 axis_labels["Tp_Tm"] = axis_labels["T_av"]
 axis_labels["T0_fit"] = axis_labels["T0"]
 axis_labels["I_fit"] = r"I ( mA )"
+axis_labels["Stabilized"] = "Stable points"
 
 # Legend labels
 legend_labels = dict()
@@ -68,6 +69,9 @@ def Plot(xdata, ydata, xkey, ykey, *args, **kwargs):
 
     ax:     matplotlib.ax
             Used to draw on an existing figure, requires fig
+
+    force_sample:   bool
+            Used to draw sample name even if fig is passed
     """
 
     # Looks for known kwargs
@@ -106,7 +110,7 @@ def Plot(xdata, ydata, xkey, ykey, *args, **kwargs):
                         labels.append(parameters[key])
                 else:
                     raise TypeError("parameters must be strings")
-            label = " ,".join(labels)
+            label = ", ".join(labels)
             label_size = len(labels)
             if label_size <= 1:
                 label_font = axis_fs

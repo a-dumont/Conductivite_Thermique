@@ -241,10 +241,9 @@ class Data_Set():
             self.__list_measures = list(m._Measurement__dict_measures.keys())
             self.__list_parameters = list(
                 m._Measurement__dict_parameters.keys())
+            self.__find_measures()
         else:
             pass
-
-        self.__find_measures()
 
         return
 
@@ -307,7 +306,7 @@ class Data_Set():
                 "or a list of Measurements")
 
         self.measurements += measurements
-        if len(self.__list_measures) == 0:
+        if len(self.measurements) == 1:
             m = measurements[0]
             self.__list_measures = list(m._Measurement__dict_measures.keys())
             self.__list_parameters = list(
@@ -428,16 +427,13 @@ class Data_Set():
             pass
 
         if "parameters" in kwargs:
-            parameters = dict()
             parameters_list = kwargs["parameters"]
             kwargs.pop("parameters")
-            parameters = []
+            parameters = [dict() for i in self.measurements]
             for p in parameters_list:
                 if p in self.parameters:
-                    for m in self.measurements:
-                        params = dict()
-                        params[p] = m[p]
-                        parameters.append(params)
+                    for i in range(len(self.measurements)):
+                        parameters[i][p] = self.measurements[i][p]
                 else:
                     raise Exception("parameters must be in self.parameters")
         else:
