@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import numpy as np
 
-# Axis labels
+# Axis labels measures
 axis_labels = dict()
 axis_labels["T_av"] = r"T ( K )"
 axis_labels["I"] = r"I ( A )"
@@ -28,7 +28,21 @@ axis_labels["dTy/dTx"] = r"$\Delta T_{\rm y}/\Delta T_{\rm x}$ ( % )"
 axis_labels["Tp_Tm"] = axis_labels["T_av"]
 axis_labels["T0_fit"] = axis_labels["T0"]
 axis_labels["I_fit"] = r"I ( mA )"
+
+# Axis labels Log
 axis_labels["Stabilized"] = "Stable points"
+
+# Axis labels raw data
+axis_labels["dTy_0"] = r"$\Delta T_{\rm y}$ Heat-off (V)"
+axis_labels["dTy_Q"] = r"$\Delta T_{\rm y}$ Heat-on (V)"
+axis_labels["dTx_0"] = r"$\Delta T_{\rm x}$ Heat-off (V)"
+axis_labels["dTx_Q"] = r"$\Delta T_{\rm x}$ Heat-on (V)"
+axis_labels["dTabs_0"] = r"$\Delta T_{\rm abs}$ Heat-off (V)"
+axis_labels["dTabs_Q"] = r"$\Delta T_{\rm abs}$ Heat-on (V)"
+axis_labels["R+_0"] = r"$R^{+}$ Heat-off (V)"
+axis_labels["R+_Q"] = r"$R^{+} Heat-on (V)$"
+axis_labels["R-_0"] = r"$R^{-}$ Heat-off (V)"
+axis_labels["R-_Q"] = r"$R^{-}$ Heat-on (V)"
 
 # Legend labels
 legend_labels = dict()

@@ -32,6 +32,7 @@ from ThermalConductivity import Comparison as Comp
 #                         \____|_____/_/   \_\____/____/                       #
 ################################################################################
 
+
 class Conductivity():
     """
     This is the main class of the program. It contains all the
@@ -96,7 +97,7 @@ class Conductivity():
                 self.__Analyze(self["gain"])
                 self.__add_measure()
 
-            # If the file contains treated data 
+            # If the file contains treated data
             elif self["filetype"] == "treated":
                 data = U.read_file_treated(filename)
 
@@ -273,7 +274,6 @@ class Conductivity():
             self["kxx"], self["dTx"], dTy, self["w"], self["L"])
         self.store_as_measure(kxy, "kxy")
 
-
     def __add_parameters(self, width, thickness, length):
 
         filename = self["filename"]
@@ -393,10 +393,11 @@ class Conductivity():
         if "x_axis" in kwargs:
             x_axis = kwargs["x_axis"]
             kwargs.pop("x_axis")
-            if x_axis in self.measures:
+            if x_axis in self.measures or x_axis in self.raw_data:
                 pass
             else:
-                raise Exception("x_axis must be in self.measures")
+                raise Exception(
+                    "x_axis must be in self.measures or self.raw_data")
         else:
             x_axis = "T_av"
 
@@ -561,7 +562,6 @@ class Conductivity():
         measurement.parameters = self.parameters
 
         return measurement
-
 
     def Write_out(self, filename=None, overwrite="ask"):
         """

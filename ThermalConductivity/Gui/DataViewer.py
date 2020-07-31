@@ -170,7 +170,6 @@ class mywindow(QtWidgets.QMainWindow):
             action.setCheckable(True)
             action.changed.connect(self.toggle_parameter)
             menu.addAction(action)
-        menu.addAction(self.ui.actionOpen)
         self.ui.toolButtonAnalysisParameters.setMenu(menu)
         self.x_axis_box = self.ui.comboBoxAnalysisXaxis
         self.y_axis_box = self.ui.comboBoxAnalysisYaxis
@@ -235,7 +234,11 @@ class mywindow(QtWidgets.QMainWindow):
         canvas.figure.add_axes(ax)
         canvas.ax.clear()
         canvas.draw()
-        self.parameters = []
+        for i in self.parameters_menu.actions():
+            if i.isChecked() is True:
+                i.setChecked(False)
+            else:
+                pass
         return
 
     def initialize_pushButton_loadFile(self):
