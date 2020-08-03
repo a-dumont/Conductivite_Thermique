@@ -385,6 +385,7 @@ class mywindow(QtWidgets.QMainWindow):
             pass
 
         dataset = self.dataset
+        filename = self.data["filename"]
         measurement = self.data.Convert_to_Measurement()
         dataset.Add_measurements([measurement])
         self.dataset = dataset
