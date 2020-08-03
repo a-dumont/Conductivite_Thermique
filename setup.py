@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ThermalConductivity", # Replace with your own username
-    version="4.1.0",
+    version="4.1.1",
     author="Alexandre Dumont",
     author_email="alexandre.dumont3@usherbrooke.ca",
     description="A module to analyze thermal conductivity measurements",
