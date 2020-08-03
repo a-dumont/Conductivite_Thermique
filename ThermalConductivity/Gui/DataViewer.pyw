@@ -329,7 +329,7 @@ class mywindow(QtWidgets.QMainWindow):
         return
 
     def clearFile(self):
-        if hasattr(self,filename) is True:
+        if hasattr(self,"filename") is True:
             filename = self.filename
             delattr(self, "filename")
         else:
