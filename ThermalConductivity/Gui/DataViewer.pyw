@@ -367,7 +367,7 @@ class mywindow(QtWidgets.QMainWindow):
                 self.dataset = dataset
                 self.populate_tab_comparison()
                 if len(measurements) == 0:
-                    delattr(self,dataset)
+                    delattr(self,"dataset")
                 else:
                     pass
         else:
