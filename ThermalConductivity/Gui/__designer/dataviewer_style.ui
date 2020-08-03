@@ -80,7 +80,7 @@
           </size>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tab_analysis">
           <attribute name="title">
@@ -230,7 +230,7 @@
                    <widget class="QComboBox" name="comboBox_comparisonMeasurements"/>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="pushButton_comparisonRemove">
+                   <widget class="QPushButton" name="pushButtonComparisonRemove">
                     <property name="text">
                      <string>Remove Measurement</string>
                     </property>
@@ -276,14 +276,14 @@
                    <number>6</number>
                   </property>
                   <item>
-                   <widget class="QPushButton" name="pushButton_ComparisonAddFile">
+                   <widget class="QPushButton" name="pushButtonComparisonAddFile">
                     <property name="text">
                      <string>Add Measurement from file</string>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="pushButton_comparisonAddAnalysis">
+                   <widget class="QPushButton" name="pushButtonComparisonAddAnalysis">
                     <property name="text">
                      <string>Add Measurement from Analysis</string>
                     </property>
