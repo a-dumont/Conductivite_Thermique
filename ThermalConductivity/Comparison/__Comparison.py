@@ -243,7 +243,8 @@ class Data_Set():
                 m._Measurement__dict_parameters.keys())
             self.__find_measures()
         else:
-            pass
+            self.measures = []
+            self.parameters = []
 
         return
 
@@ -324,10 +325,14 @@ class Data_Set():
 
         if hasattr(self, "measures") is False:
             measures = self.__list_measures
+        elif len(self.measures) == 0:
+            measures = self.__list_measures
         else:
             measures = self.measures
 
         if hasattr(self, "parameters") is False:
+            parameters = self.__list_parameters
+        elif len(self.parameters) == 0:
             parameters = self.__list_parameters
         else:
             parameters = self.parameters
