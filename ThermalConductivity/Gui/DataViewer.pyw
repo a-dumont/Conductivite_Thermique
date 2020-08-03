@@ -100,8 +100,12 @@ class mywindow(QtWidgets.QMainWindow):
 
     def initialize_tab_comparison(self):
         tab = self.ui.tab_comparision
-        button = self.ui.pushButton_ComparisonAdd
-        button.clicked.connect(self.add_to_dataset)
+        button = self.ui.pushButton_ComparisonAddFile
+        button.clicked.connect(self.addToDatasetFromFile)
+        button2 = self.ui.pushButton_ComparisonAddAnalysis
+        button2.clicked.connect(self.addToDatasetFromAnalysis)
+        button3 = self.ui.pushButton_ComparisonRemove
+        button3.clicked.connect(self.removeFromDataset)
 
     def initialize_tab_analysis(self):
         tab = self.ui.tab_analysis
@@ -135,25 +139,26 @@ class mywindow(QtWidgets.QMainWindow):
             self.populate_tab_analysis()
         return
 
-    def add_to_dataset(self):
+    def addToDatasetFromFile(self):
         if hasattr(self, "filename") is False:
             return
         else:
-            if hasattr(self, "data") is False:
-                self.data = Comp.Data_Set()
+            if hasattr(self, "dataset") is False:
+                self.dataset = Comp.Data_Set()
             else:
-                if type(self.data) == Comp.Data_Set:
-                    pass
-                else:
-                    self.data = Comp.Data_Set()
+                pass
+        dataset = self.dataset
         filename = self.filename
         measurement = Comp.Measurement(filename)
-        self.data.Add_measurements([measurement])
+        dataset.Add_measurements([measurement])
+        self.dataset = dataset
+        filename = os.path.split(filename)[1]
+        self.ui.comboBox_ComparisonMeasurements.addItem(filename)
         self.populate_tab_comparison()
         return
 
     def populate_tab_comparison(self):
-        data = self.data
+        data = self.dataset
         self.ui.comboBoxComparisonXaxis.clear()
         self.ui.comboBoxComparisonYaxis.clear()
 
@@ -336,6 +341,42 @@ class mywindow(QtWidgets.QMainWindow):
             pass
         label = ("No file loaded")
         self.ui.label_filename.setText(label)
+        return
+
+    def removeFromDataset(self):
+        if hasattr(self, "dataset") is True:
+            dataset = self.dataset
+            measurements = dataset.measurements
+            index = self.ui.comboBox_comparisonMeasurements.currentIndex()
+            dataset = Comp.Data_Set(measurements.pop(index))
+            self.ui.comboBox_comparisonMeasurements.removeItem(index)
+            self.dataset = dataset
+            self.populate_tab_comparison()
+        else:
+            pass
+        return
+
+    def addToDatasetFromAnalysis(self):
+        if hasattr(self, "data") is False:
+            return
+        else:
+            if hasattr(self.data,"Convert_to_Measurement") is False:
+                return
+            else:
+                pass
+
+        if hasattr(self, "dataset") is False:
+            self.dataset = Comp.Data_Set()
+        else:
+            pass
+
+        dataset = self.dataset
+        measurement = self.data.Convert_to_Measurement()
+        dataset.Add_measurements([measurement])
+        self.dataset = dataset
+        filename = os.path.split(filename)[1]
+        self.ui.comboBox_ComparisonMeasurements.addItem(filename)
+        self.populate_tab_comparison()
         return
 
 
