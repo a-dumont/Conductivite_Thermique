@@ -100,11 +100,11 @@ class mywindow(QtWidgets.QMainWindow):
 
     def initialize_tab_comparison(self):
         tab = self.ui.tab_comparision
-        button = self.ui.pushButton_ComparisonAddFile
+        button = self.ui.pushButtonComparisonAddFile
         button.clicked.connect(self.addToDatasetFromFile)
-        button2 = self.ui.pushButton_ComparisonAddAnalysis
+        button2 = self.ui.pushButtonComparisonAddAnalysis
         button2.clicked.connect(self.addToDatasetFromAnalysis)
-        button3 = self.ui.pushButton_ComparisonRemove
+        button3 = self.ui.pushButtonComparisonRemove
         button3.clicked.connect(self.removeFromDataset)
 
     def initialize_tab_analysis(self):
