@@ -174,8 +174,6 @@ class mywindow(QtWidgets.QMainWindow):
             menu.addAction(action)
         menu.addAction(self.ui.actionOpen)
         self.ui.toolButtonComparisoParameters.setMenu(menu)
-        self.x_axis_box = self.ui.comboBoxComparisonXaxis
-        self.y_axis_box = self.ui.comboBoxComparisonYaxis
         self.parameters = []
         self.parameters_menu = menu
 
@@ -202,8 +200,6 @@ class mywindow(QtWidgets.QMainWindow):
             action.changed.connect(self.toggle_parameter)
             menu.addAction(action)
         self.ui.toolButtonAnalysisParameters.setMenu(menu)
-        self.x_axis_box = self.ui.comboBoxAnalysisXaxis
-        self.y_axis_box = self.ui.comboBoxAnalysisYaxis
         self.parameters = []
         self.parameters_menu = menu
         return
@@ -216,18 +212,20 @@ class mywindow(QtWidgets.QMainWindow):
                 return
             else:
                 data = self.data
+                x_axis = self.ui.comboBoxAnalysisXaxis.currentText()
+                y_axis = self.ui.comboBoxAnalysisYaxis.currentText()
         elif current == "Comparison":
             if hasattr(self,"dataset") is False:
                 return
             else:
                 data = self.dataset
+                x_axis = self.ui.comboBoxComparisonXaxis.currentText()
+                y_axis = self.ui.comboBoxComparisonYaxis.currentText()
         else:
             return
 
         parameters = self.parameters
         canvas = self.ui.plotWidget.canvas
-        x_axis = self.x_axis_box.currentText()
-        y_axis = self.y_axis_box.currentText()
         fig = self.ui.plotWidget.canvas.fig
         ax = self.ui.plotWidget.canvas.ax
         data.Plot(y_axis, "-o", x_axis=x_axis,
