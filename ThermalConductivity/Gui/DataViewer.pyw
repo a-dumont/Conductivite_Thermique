@@ -232,7 +232,7 @@ class mywindow(QtWidgets.QMainWindow):
         ax = self.ui.plotWidget.canvas.ax
         data.Plot(y_axis, "-o", x_axis=x_axis,
                   parameters=parameters, show=True, fig=fig, ax=ax)
-        if type(self.data) == A.Conductivity:
+        if type(data) == A.Conductivity:
             canvas.figure.text(0.05, 0.01, data["sample"],
                                fontsize=16, va="bottom", ha="left")
         else:
@@ -358,8 +358,9 @@ class mywindow(QtWidgets.QMainWindow):
             dataset = self.dataset
             measurements = dataset.measurements
             index = self.ui.comboBox_comparisonMeasurements.currentIndex()
-            dataset = Comp.Data_Set(measurements.pop(index))
+            measurements.pop(index)
             self.ui.comboBox_comparisonMeasurements.removeItem(index)
+            dataset = Comp.Data_Set(measurements)
             self.dataset = dataset
             self.populate_tab_comparison()
         else:
