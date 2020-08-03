@@ -185,6 +185,32 @@ class Conductivity():
         data = U.read_file_raw(filename)
         data2 = U.read_file_raw(filename2)
 
+        n = len(data["T0"])
+        n2 = len(data2["T0"])
+
+        if n != n2:
+            if abs(data["T0"][0]-data2["T0"][0]) <= 0.1:
+                if n > n2:
+                    for key in data:
+                        data[key] = data[key][0:n2]
+                else:
+                    for key in data2:
+                        data2[key] = data2[key][0:n]
+            elif abs(data["T0"][-1]-data2["T0"][-1]) <= 0.1:
+                if n > n2:
+                    for key in data:
+                        data[key] = data[key][abs(n-n2):]
+                else:
+                    for key in data2:
+                        data2[key] = data2[key][abs(n-n2):]
+            else:
+                if n > n2:
+                    for key in data:
+                        data[key] = data[key][0:n2]
+                else:
+                    for key in data2:
+                        data2[key] = data2[key][0:n]
+
         sym_data = dict()
 
         for key, values in data.items():
