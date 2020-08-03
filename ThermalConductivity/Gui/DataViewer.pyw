@@ -153,7 +153,7 @@ class mywindow(QtWidgets.QMainWindow):
         dataset.Add_measurements([measurement])
         self.dataset = dataset
         filename = os.path.split(filename)[1]
-        self.ui.comboBox_ComparisonMeasurements.addItem(filename)
+        self.ui.comboBox_comparisonMeasurements.addItem(filename)
         self.populate_tab_comparison()
         return
 
@@ -209,11 +209,21 @@ class mywindow(QtWidgets.QMainWindow):
         return
 
     def plot(self):
-        if hasattr(self, "data") is False:
-            return
+        tab = self.ui.tabWidget
+        current = tab.tabText(tab.currentIndex())
+        if current == "Analysis":
+            if hasattr(self, "data") is False:
+                return
+            else:
+                data = self.data
+        elif current == "Comparison":
+            if hasattr(self,"dataset") is False:
+                return
+            else:
+                data = self.dataset
         else:
-            pass
-        data = self.data
+            return
+
         parameters = self.parameters
         canvas = self.ui.plotWidget.canvas
         x_axis = self.x_axis_box.currentText()
@@ -375,7 +385,7 @@ class mywindow(QtWidgets.QMainWindow):
         dataset.Add_measurements([measurement])
         self.dataset = dataset
         filename = os.path.split(filename)[1]
-        self.ui.comboBox_ComparisonMeasurements.addItem(filename)
+        self.ui.comboBox_comparisonMeasurements.addItem(filename)
         self.populate_tab_comparison()
         return
 
