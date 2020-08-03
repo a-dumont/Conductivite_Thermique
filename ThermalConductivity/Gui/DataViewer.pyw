@@ -118,7 +118,7 @@ class mywindow(QtWidgets.QMainWindow):
         dialog = Dialog_Parameters()
         dialog.exec_()
         kwargs = dialog.kwargs
-        return values
+        return kwargs
 
     def analyze_data(self):
         if hasattr(self, "filename") is False:
