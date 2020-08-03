@@ -15,24 +15,50 @@ class Dialog_Parameters(QtWidgets.QDialog):
         self.ui = Ui_Dialog_Parameters()
         self.ui.setupUi(self)
 
-        self.ui.lineEdit_width.setText("1e-6")
-        self.ui.lineEdit_thickness.setText("1e-6")
-        self.ui.lineEdit_length.setText("1e-6")
-
         self.ui.buttonBox.clicked.connect(self.return_values)
         return
 
     def return_values(self):
+        # Physical parameters
         w = float(self.ui.lineEdit_width.text())
         t = float(self.ui.lineEdit_thickness.text())
         L = float(self.ui.lineEdit_length.text())
         sign = self.ui.comboBox_sign.currentText()
+        gain = float(self.ui.lineEdit_gain.text())
+
         if sign == "Positive":
             sign = 1
         else:
             sign = -1
 
-        self.values = (w, t, L, sign)
+        # Function parameters
+        force_kxy = self.ui.comboBox_forceKxy.currentText()
+        symmetrize = self.ui.comboBox_gain.currentText()
+
+        if force_kxy == "Optional":
+            force_kxy = False
+        elif force_kxy == "True":
+            force_kxy = True
+        elif force_kxy == "False":
+            force_kxy = False
+
+        if symmetrize == "Optional":
+            symmetrize = True
+        elif symmetrize == "True":
+            symmetrize = True
+        elif symmetrize == "False":
+            symmetrize = False
+
+        kwargs = dict()
+        kwargs["w"] = w
+        kwargs["t"] = t
+        kwargs["L"] = L
+        kwargs["sign"] = sign
+        kwargs["gain"] = gain
+        kwargs["symmetrize"] = symmetrize
+        kwargs["force_kxy"] = force_kxy
+
+        self.kwargs = kwargs
         return
 
 
@@ -88,10 +114,10 @@ class mywindow(QtWidgets.QMainWindow):
         compute.clicked.connect(self.analyze_data)
         return
 
-    def get_dimensions(self):
+    def get_kwargs(self):
         dialog = Dialog_Parameters()
         dialog.exec_()
-        values = dialog.values
+        kwargs = dialog.kwargs
         return values
 
     def analyze_data(self):
@@ -101,8 +127,8 @@ class mywindow(QtWidgets.QMainWindow):
             box = self.ui.comboBoxAnalysisMethod
             method = self.analysis_methods[box.currentText()]
             if method == A.Conductivity:
-                parameters = self.get_dimensions()
-                self.data = method(self.filename, *parameters)
+                parameters = self.get_kwargs()
+                self.data = method(self.filename, **parameters)
             else:
                 self.data = method(self.filename)
                 delattr(self, "filename")
@@ -193,7 +219,7 @@ class mywindow(QtWidgets.QMainWindow):
                   parameters=parameters, show=True, fig=fig, ax=ax)
         if type(self.data) == A.Conductivity:
             canvas.figure.text(0.05, 0.01, data["sample"],
-                           fontsize=16, va="bottom", ha="left")
+                               fontsize=16, va="bottom", ha="left")
         else:
             pass
         self.ui.plotWidget.canvas.draw()

@@ -14,19 +14,29 @@
    <string>Sample Parameters</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
+   <item row="1" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Force kxy</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Thickness: </string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Width: </string>
        </property>
       </widget>
      </item>
@@ -37,21 +47,62 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Sign: </string>
+     <item row="4" column="1">
+      <widget class="QComboBox" name="comboBox_symmetrize">
+       <property name="currentText">
+        <string>Optional</string>
        </property>
+       <property name="currentIndex">
+        <number>-1</number>
+       </property>
+       <property name="placeholderText">
+        <string>Optional</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>True</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>False</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QComboBox" name="comboBox_forceKxy">
+       <property name="currentIndex">
+        <number>-1</number>
+       </property>
+       <property name="placeholderText">
+        <string>Optional</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>False</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>True</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit_width"/>
+      <widget class="QLineEdit" name="lineEdit_width">
+       <property name="text">
+        <string>1e-6</string>
+       </property>
+      </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_thickness"/>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_length"/>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>Symmetrize</string>
+       </property>
+      </widget>
      </item>
      <item row="3" column="1">
       <widget class="QComboBox" name="comboBox_sign">
@@ -67,17 +118,49 @@
        </item>
       </widget>
      </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="lineEdit_length">
+       <property name="text">
+        <string>1e-6</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Sign: </string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="lineEdit_thickness">
+       <property name="text">
+        <string>1e-6</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Width: </string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLineEdit" name="lineEdit_gain">
+       <property name="text">
+        <string>1000</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>Gain</string>
+       </property>
+      </widget>
+     </item>
     </layout>
-   </item>
-   <item row="1" column="0">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>
