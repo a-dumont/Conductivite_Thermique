@@ -33,7 +33,7 @@ class Dialog_Parameters(QtWidgets.QDialog):
 
         # Function parameters
         force_kxy = self.ui.comboBox_forceKxy.currentText()
-        symmetrize = self.ui.comboBox_gain.currentText()
+        symmetrize = self.ui.comboBox_symmetrize.currentText()
 
         if force_kxy == "Optional":
             force_kxy = False
