@@ -357,12 +357,15 @@ class mywindow(QtWidgets.QMainWindow):
         if hasattr(self, "dataset") is True:
             dataset = self.dataset
             measurements = dataset.measurements
-            index = self.ui.comboBox_comparisonMeasurements.currentIndex()
-            measurements.pop(index)
-            self.ui.comboBox_comparisonMeasurements.removeItem(index)
-            dataset = Comp.Data_Set(measurements)
-            self.dataset = dataset
-            self.populate_tab_comparison()
+            if len(measurements) == 0:
+                return
+            else:
+                index = self.ui.comboBox_comparisonMeasurements.currentIndex()
+                measurements.pop(index)
+                self.ui.comboBox_comparisonMeasurements.removeItem(index)
+                dataset = Comp.Data_Set(measurements)
+                self.dataset = dataset
+                self.populate_tab_comparison()
         else:
             pass
         return
