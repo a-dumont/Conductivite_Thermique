@@ -379,18 +379,43 @@ def find_probe(filename, header):
         filename = os.path.abspath(filename)
         header = read_header(filename)
     else:
-        pass
-
-    header = list(filter(None, header[-1].strip().split("\t")))
-
-    # Defaults to tallahassee changes only if VTI detected
-    probe = "Tallahassee"
-    vti = D.raw_data_dict["dTx_0"]+D.log_data_dict["dTx"]
-    for i in vti:
-        if i in header:
-            probe = "VTI"
+        if type(header) is list:
+            if type(header[0]) is str:
+                pass
+            else:
+                raise TypeError(
+                    "Header must be output of Utilities.read_header")
         else:
-            pass
+            raise TypeError("Header must be output of Utilities.read_header")
+
+    if len(header) > 1:
+        keys = D.parameters_dict["probe"]
+        probe = None
+        for h in header:
+            if probe is not None:
+                break
+            else:
+                pass
+            for k in keys:
+                if h.find(k) != -1:
+                    probe = h.split("\t")[-1]
+                    break
+                else:
+                    pass
+
+    if probe is None:
+        header = list(filter(None, header[-1].strip().split("\t")))
+
+        # Defaults to tallahassee changes only if VTI detected
+        probe = "Tallahassee"
+        vti = D.raw_data_dict["dTx_0"]+D.log_data_dict["dTx"]
+        for i in vti:
+            if i in header:
+                probe = "VTI"
+            else:
+                pass
+    else:
+        pass
 
     return probe
 
