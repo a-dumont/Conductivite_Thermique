@@ -225,7 +225,7 @@ class Conductivity():
         return sym_data
 
     def __Analyze(self, gain):
-        if self["probe"] == "Tallahasse":
+        if self["probe"] == "Tallahassee":
             self.__tlh_analyse(gain)
         elif self["probe"] == "VTI":
             self.__vti_analyse(gain)
