@@ -2,7 +2,7 @@
 This subsubmodule contains detailled versions of useful functions
 """
 import numpy as np
-import numpy.polynomial as npp
+import numpy.polynomial.polynomial as npp
 from ThermalConductivity.Thermometry import seebeck_thermometry
 
 
