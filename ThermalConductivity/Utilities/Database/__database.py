@@ -50,6 +50,7 @@ parameters_dict["L"] = ["L"]
 parameters_dict["mount"] = ["mount"]
 parameters_dict["sample"] = ["Sample", "sample"]
 parameters_dict["date"] = ["Date", "date"]
+parameters_dict["probe"] = ["probe", "Probe"]
 
 # Log file measurements
 log_data_dict = dict()
