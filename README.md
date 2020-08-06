@@ -45,3 +45,14 @@ foo@bar:~$ pip install path/to/ThermalConductivity-x.y.tar.gz
 
 ## Thermometry
 - Get seebeck coefficients
+
+## Utilities
+- To read/write files
+- To debug
+
+## Gui
+- Do not use! Use DataViewer!
+
+# Now has a GUI
+## DataViewer
+![](https://github.com/a-dumont/Thermal_Conductivity/blob/master/Pictures/DataViewer.png)
