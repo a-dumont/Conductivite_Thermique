@@ -1,2 +1,3 @@
 from ThermalConductivity.Analysis.__Interactive_kxy import Conductivity
 from ThermalConductivity.Analysis.__log_analysis import Log
+import ThermalConductivity.Analysis.Functions
