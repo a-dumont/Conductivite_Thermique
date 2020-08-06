@@ -256,11 +256,11 @@ class Conductivity():
         kxx = F.compute_kxx(I, dTx, self["w"], self["t"], self["L"])
 
         # Store values in self
-        self.store_as_measure(kxx, "kxx")
-        self.store_as_measure(dTx, "dTx")
         self.store_as_measure(T_av, "T_av")
         self.store_as_measure(Tp, "Tp")
         self.store_as_measure(Tm, "Tm")
+        self.store_as_measure(dTx, "dTx")
+        self.store_as_measure(kxx, "kxx")
 
     def __vti_analyse(self, gain):
         self.__compute_and_store_vti_physical_properties(gain)
