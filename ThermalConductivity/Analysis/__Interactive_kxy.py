@@ -79,7 +79,15 @@ class Conductivity():
                 # If symmetrize is True
                 if self["H"] != "0.0" and self["symmetrize"] is True:
                     filename2 = U.get_symetric_file(filename)
-                    raw_data = self.__Symmetrize(filename, filename2)
+                    if filename2 is None:
+                        self["symmetrize"] = False
+                        if filename.find("--") != -1:
+                            self["H"] = "-"+self["H"]
+                            raw_data = U.read_file_raw(filename)
+                        else:
+                            raw_data = U.read_file_raw(filename)
+                    else:
+                        raw_data = self.__Symmetrize(filename, filename2)
                 elif self["H"] != "0.0" and self["symmetrize"] is False:
                     if filename.find("--") != -1:
                         self["H"] = "-"+self["H"]
