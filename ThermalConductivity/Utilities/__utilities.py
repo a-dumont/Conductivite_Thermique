@@ -76,12 +76,12 @@ def get_symetric_file(filename, days=3):
                 else:
                     pass
             if if_file is True:
-                pass
+                filename2 = os.path.join(directory,filename2)
             else:
                 print("No symetric file found")
                 filename2 = None
 
-    return os.path.join(directory, filename2)
+    return filename2
 
 
 def generate_dates(date, days=3):
