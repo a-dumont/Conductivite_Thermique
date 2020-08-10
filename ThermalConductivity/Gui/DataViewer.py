@@ -3,6 +3,7 @@ from ThermalConductivity.Gui.__designer.dataviewer_style import Ui_MainWindow
 from ThermalConductivity.Gui.__designer.parameters_dialog import (
     Ui_Dialog_Parameters)
 from ThermalConductivity import Analysis as A
+from ThermalConductivity import Utilities as U
 from ThermalConductivity import Comparison as Comp
 
 import sys
@@ -132,7 +133,14 @@ class mywindow(QtWidgets.QMainWindow):
             method = self.analysis_methods[box.currentText()]
             if method == A.Conductivity:
                 parameters = self.get_kwargs()
-                self.data = method(self.filename, **parameters)
+                with U.capture_stdout() as get_value:
+                    self.data = method(self.filename, **parameters)
+                    captured = get_value()
+                    if captured != "":
+                        captured = captured.strip()
+                        self.ui.label_filename.setText(captured)
+                    else:
+                        pass
             else:
                 self.data = method(self.filename)
                 delattr(self, "filename")

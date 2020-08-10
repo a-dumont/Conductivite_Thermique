@@ -3,12 +3,15 @@ This module should contain technical stuff like readfile functions and date
 handling that are required by other modules.
 """
 
+import sys
 import os
 import datetime
 import re
 import numpy as np
 import ThermalConductivity.Utilities.Database as D
 from matplotlib.backends.backend_pdf import PdfPages
+from io import StringIO
+from contextlib import contextmanager
 
 
 def get_symetric_file(filename, days=3):
@@ -668,3 +671,19 @@ def save_to_pdf(filename, figures, overwrite="ask", create_dir="ask"):
         return
 
     return
+
+@contextmanager
+def capture_stdout():
+    """
+    context manager encapsulating a pattern for capturing stdout writes
+    and restoring sys.stdout even upon exceptions
+    """
+    # Redirect sys.stdout
+    out = StringIO()
+    sys.stdout = out
+    # Yield a method clients can use to obtain the value
+    try:
+        yield out.getvalue
+    finally:
+        # Restore the normal stdout
+        sys.stdout = sys.__stdout__
