@@ -138,7 +138,7 @@ class mywindow(QtWidgets.QMainWindow):
                     captured = get_value()
 
             else:
-                with U.capture_stdout() as getvalue:
+                with U.capture_stdout() as get_value:
                     self.data = method(self.filename)
                     captured = get_value()
 
