@@ -47,6 +47,7 @@ def get_symetric_file(filename, days=3):
     # If 1 file left
     elif len(files) == 1:
         filename2 = files[0]
+        filename2 = os.path.join(directory,filename2)
 
     # If there is 2 files checks for a treated file
     elif len(files) == 2:
