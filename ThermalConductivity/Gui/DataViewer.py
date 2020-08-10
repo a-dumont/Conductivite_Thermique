@@ -417,7 +417,10 @@ class mywindow(QtWidgets.QMainWindow):
         if hasattr(self, "filename") is False:
             return
         else:
-            pass
+            if hasattr(self, "data") is False:
+                return
+            else:
+                pass
 
         filename = self.filename
         directory, filename = tuple(os.path.split(filename))
