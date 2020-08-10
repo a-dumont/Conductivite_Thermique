@@ -136,15 +136,18 @@ class mywindow(QtWidgets.QMainWindow):
                 with U.capture_stdout() as get_value:
                     self.data = method(self.filename, **parameters)
                     captured = get_value()
-                if captured != "":
-                    captured = captured.strip()
-                    self.ui.label_filename.setText(captured)
-                else:
-                    pass
+
             else:
-                self.data = method(self.filename)
-                delattr(self, "filename")
+                with U.capture_stdout() as getvalue:
+                    self.data = method(self.filename)
+                    captured = get_value()
+
             self.populate_tab_analysis()
+            if captured != "":
+                captured = captured.strip()
+                self.ui.label_filename.setText(captured)
+            else:
+                pass
         return
 
     def addToDatasetFromFile(self):

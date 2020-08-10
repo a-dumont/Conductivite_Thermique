@@ -81,7 +81,7 @@ def get_symetric_file(filename, days=3):
             if if_file is True:
                 filename2 = os.path.join(directory,filename2)
             else:
-                print("No symetric file found")
+                print("No symmetric file found")
                 filename2 = None
 
     return filename2
