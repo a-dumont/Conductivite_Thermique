@@ -293,7 +293,7 @@ class mywindow(QtWidgets.QMainWindow):
 
     def initialize_pushButton_loadFile(self):
         button = self.ui.pushButton_loadFile
-        button.clicked.connect(self.file_no_dialog)
+        button.clicked.connect(self.loadfile_no_dialog)
         return
 
     def initialize_actionFilesystem_tree(self):
@@ -326,10 +326,15 @@ class mywindow(QtWidgets.QMainWindow):
 
     def initialize_actionOpen(self):
         actionOpen = self.ui.actionOpen
-        actionOpen.triggered.connect(self.file_dialog)
+        actionOpen.triggered.connect(self.loadfile_dialog)
         return
 
-    def file_dialog(self):
+    def initialize_actionOpen(self):
+        actionSave = self.ui.actionSave_2
+        actionSave.triggered.connect(self.savefile_dialog)
+        return
+
+    def loadfile_dialog(self):
         cur_dir = QtCore.QDir.currentPath()
         filename = QtWidgets.QFileDialog.getOpenFileName(self, cur_dir)[0]
         if os.path.isfile(filename) is False:
@@ -340,7 +345,7 @@ class mywindow(QtWidgets.QMainWindow):
             self.ui.label_filename.setText(label)
         return
 
-    def file_no_dialog(self):
+    def loadfile_no_dialog(self):
         tree = self.ui.treeView
         model = tree.model()
         filename = os.path.abspath(model.filePath(tree.currentIndex()))
@@ -407,6 +412,38 @@ class mywindow(QtWidgets.QMainWindow):
         self.populate_tab_comparison()
         return
 
+    def savefile_dialog(self):
+        if hasattr(self,filename) is False:
+            return
+        else:
+            pass
+
+        filename = self.filename
+        directory, filename = os.path.split(filename)
+        if type(self.data) == A.Conductivity:
+            if self.data["H"] == "0.0" or self.data["symmetrize"] is True:
+                filename = filename.replace(".dat","-treated.dat")
+            else:
+                filename = filename.replace(".dat","-sym-treated.dat")
+        else:
+            return
+
+        filename = os.path.join(directory,filename)
+        cur_dir = QtCore.QDir(filename)
+
+        filename = QtWidgets.QFileDialog.getSaveFileName(self, cur_dir)[0]
+
+        with U.capture_stdout() as get_value:
+            self.data.Write_out(filename,overwrite=True)
+            captured = get_value()
+
+        if captured != "":
+            captured = captured.strip()
+            self.ui.label_filename.setText(captured)
+        else:
+            pass
+
+        return
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
