@@ -437,6 +437,7 @@ class mywindow(QtWidgets.QMainWindow):
         filename = QtWidgets.QFileDialog.getSaveFileName(
             self, "Savefile", filename)[0]
 
+        print(filename)
         if filename == directory:
             return
         else:
