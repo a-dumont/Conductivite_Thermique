@@ -413,13 +413,13 @@ class mywindow(QtWidgets.QMainWindow):
         return
 
     def savefile_dialog(self):
-        if hasattr(self,filename) is False:
+        if hasattr(self,"filename") is False:
             return
         else:
             pass
 
         filename = self.filename
-        directory, filename = os.path.split(filename)
+        directory, filename = tuple(os.path.split(filename))
         if type(self.data) == A.Conductivity:
             if self.data["H"] == "0.0" or self.data["symmetrize"] is True:
                 filename = filename.replace(".dat","-treated.dat")
