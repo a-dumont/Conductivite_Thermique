@@ -41,7 +41,7 @@ def get_symetric_file(filename, days=3):
 
     # If only 0 file left
     if len(files) == 0:
-        print("No symetric file found")
+        print("No symmetric file found")
         filename2 = None
 
     # If 1 file left
