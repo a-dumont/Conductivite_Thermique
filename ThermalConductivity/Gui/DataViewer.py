@@ -413,7 +413,7 @@ class mywindow(QtWidgets.QMainWindow):
         return
 
     def savefile_dialog(self):
-        if hasattr(self,"filename") is False:
+        if hasattr(self, "filename") is False:
             return
         else:
             pass
@@ -422,19 +422,19 @@ class mywindow(QtWidgets.QMainWindow):
         directory, filename = tuple(os.path.split(filename))
         if type(self.data) == A.Conductivity:
             if self.data["H"] == "0.0" or self.data["symmetrize"] is True:
-                filename = filename.replace(".dat","-treated.dat")
+                filename = filename.replace(".dat", "-treated.dat")
             else:
-                filename = filename.replace(".dat","-sym-treated.dat")
+                filename = filename.replace(".dat", "-sym-treated.dat")
         else:
             return
 
-        filename = os.path.join(directory,filename)
-        cur_dir = QtCore.QDir(filename)
+        filename = os.path.join(directory, filename)
 
-        filename = QtWidgets.QFileDialog.getSaveFileName(self, filename)[0]
+        filename = QtWidgets.QFileDialog.getSaveFileName(
+            self, "Savefile", filename)[0]
 
         with U.capture_stdout() as get_value:
-            self.data.Write_out(filename,overwrite=True)
+            self.data.Write_out(filename, overwrite=True)
             captured = get_value()
 
         if captured != "":
@@ -444,6 +444,7 @@ class mywindow(QtWidgets.QMainWindow):
             pass
 
         return
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
