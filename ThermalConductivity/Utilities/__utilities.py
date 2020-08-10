@@ -61,13 +61,11 @@ def get_symetric_file(filename, days=3):
         H = find_H(os.path.join(directory, filename))
         if filename.find("--") == -1:
             filename2 = filename.replace(H, "-"+H)
-            filename2 = os.path.join(directory,filename2)
         else:
             filename2 = filename.replace("-"+H, H)
-            filename2 = os.path.join(directory,filename2)
         if_file = os.path.isfile(os.path.join(directory, filename2))
         if if_file is True:
-            pass
+            filename2 = os.path.join(directory,filename2)
         else:
             date = find_date(os.path.join(directory, filename))
             dates = generate_dates(date)
