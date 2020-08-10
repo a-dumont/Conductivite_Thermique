@@ -234,14 +234,14 @@ class Conductivity():
 
     def __Analyze(self, gain):
         if self["probe"] == "Tallahassee":
-            self.__tlh_analyse(gain)
+            self.__tlh_analysis(gain)
         elif self["probe"] == "VTI":
-            self.__vti_analyse(gain)
+            self.__vti_analysis(gain)
 
-    def __tlh_analyse(self, gain):
+    def __tlh_analysis(self, gain):
         self.__remove_uncalibrated_points()
         self.__compute_and_store_tlh_physical_properties(gain)
-        if self.__has_non_zero_magnetic_field() or self["force_kxy"]:
+        if self["H"] != "0.0" or self["force_kxy"]:
             self.__compute_and_store_dTy_and_kxy(gain)
 
     def __remove_uncalibrated_points(self):
@@ -270,9 +270,9 @@ class Conductivity():
         self.store_as_measure(dTx, "dTx")
         self.store_as_measure(kxx, "kxx")
 
-    def __vti_analyse(self, gain):
+    def __vti_analysis(self, gain):
         self.__compute_and_store_vti_physical_properties(gain)
-        if self.__has_non_zero_magnetic_field() or self["force_kxy"]:
+        if self["H"] != "0.0" or self["force_kxy"]:
             self.__compute_and_store_dTy_and_kxy(gain)
 
     def __compute_and_store_vti_physical_properties(self, gain):
@@ -291,9 +291,6 @@ class Conductivity():
         kxx = F.compute_kxx(
             I, physicial_properties["dTx"], self["w"], self["t"], self["L"])
         self.store_as_measure(kxx, "kxx")
-
-    def __has_non_zero_magnetic_field(self):
-        return self["H"] != "0.0"
 
     def __compute_and_store_dTy_and_kxy(self, gain):
         # Compute dty
