@@ -431,7 +431,7 @@ class mywindow(QtWidgets.QMainWindow):
         filename = os.path.join(directory,filename)
         cur_dir = QtCore.QDir(filename)
 
-        filename = QtWidgets.QFileDialog.getSaveFileName(self, cur_dir)[0]
+        filename = QtWidgets.QFileDialog.getSaveFileName(self, filename)[0]
 
         with U.capture_stdout() as get_value:
             self.data.Write_out(filename,overwrite=True)
