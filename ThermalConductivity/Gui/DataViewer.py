@@ -136,12 +136,11 @@ class mywindow(QtWidgets.QMainWindow):
                 with U.capture_stdout() as get_value:
                     self.data = method(self.filename, **parameters)
                     captured = get_value()
-                    if captured != "":
-                        captured = captured.strip()
-                        self.ui.label_filename.setText(captured)
-                    else:
-                        pass
-                    print("Got this:%s" % captured)
+                if captured != "":
+                    captured = captured.strip()
+                    self.ui.label_filename.setText(captured)
+                else:
+                    pass
             else:
                 self.data = method(self.filename)
                 delattr(self, "filename")
