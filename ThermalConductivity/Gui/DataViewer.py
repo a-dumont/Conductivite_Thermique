@@ -141,6 +141,7 @@ class mywindow(QtWidgets.QMainWindow):
                         self.ui.label_filename.setText(captured)
                     else:
                         pass
+                    print("Got this:%s" % captured)
             else:
                 self.data = method(self.filename)
                 delattr(self, "filename")
@@ -223,7 +224,7 @@ class mywindow(QtWidgets.QMainWindow):
                 x_axis = self.ui.comboBoxAnalysisXaxis.currentText()
                 y_axis = self.ui.comboBoxAnalysisYaxis.currentText()
         elif current == "Comparison":
-            if hasattr(self,"dataset") is False:
+            if hasattr(self, "dataset") is False:
                 return
             else:
                 data = self.dataset
@@ -350,7 +351,7 @@ class mywindow(QtWidgets.QMainWindow):
         return
 
     def clearFile(self):
-        if hasattr(self,"filename") is True:
+        if hasattr(self, "filename") is True:
             filename = self.filename
             delattr(self, "filename")
         else:
@@ -373,7 +374,7 @@ class mywindow(QtWidgets.QMainWindow):
                 self.dataset = dataset
                 self.populate_tab_comparison()
                 if len(measurements) == 0:
-                    delattr(self,"dataset")
+                    delattr(self, "dataset")
                 else:
                     pass
         else:
@@ -384,7 +385,7 @@ class mywindow(QtWidgets.QMainWindow):
         if hasattr(self, "data") is False:
             return
         else:
-            if hasattr(self.data,"Convert_to_Measurement") is False:
+            if hasattr(self.data, "Convert_to_Measurement") is False:
                 return
             else:
                 pass
