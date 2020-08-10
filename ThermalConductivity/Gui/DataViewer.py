@@ -437,7 +437,7 @@ class mywindow(QtWidgets.QMainWindow):
         filename = QtWidgets.QFileDialog.getSaveFileName(
             self, "Savefile", filename)[0]
 
-        if filename is None:
+        if filename == "":
             return
         else:
             pass
