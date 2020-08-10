@@ -47,7 +47,7 @@ def get_symetric_file(filename, days=3):
     # If 1 file left
     elif len(files) == 1:
         filename2 = files[0]
-        filename2 = os.path.join(directory,filename2)
+        filename2 = os.path.join(directory, filename2)
 
     # If there is 2 files checks for a treated file
     elif len(files) == 2:
@@ -66,7 +66,7 @@ def get_symetric_file(filename, days=3):
             filename2 = filename.replace("-"+H, H)
         if_file = os.path.isfile(os.path.join(directory, filename2))
         if if_file is True:
-            filename2 = os.path.join(directory,filename2)
+            filename2 = os.path.join(directory, filename2)
         else:
             date = find_date(os.path.join(directory, filename))
             dates = generate_dates(date)
@@ -75,7 +75,7 @@ def get_symetric_file(filename, days=3):
                 if_file = os.path.isfile(
                     os.path.join(directory, filename3))
                 if if_file is True:
-                    filename2 = os.path.join(directory,filename3)
+                    filename2 = os.path.join(directory, filename3)
                     break
                 else:
                     pass
@@ -600,6 +600,7 @@ def write_to_file(filename, data, header, overwrite="ask", create_dir="ask",
             return
     elif os.path.isfile(filename) is True and overwrite is True:
         np.savetxt(filename, data, delimiter="\t", header=header, fmt=fmt)
+        print("Saved file: %s" % filename)
 
     elif os.path.isfile(filename) is True and overwrite is False:
         print("Could not overwrite file, aborting")
@@ -672,6 +673,7 @@ def save_to_pdf(filename, figures, overwrite="ask", create_dir="ask"):
         return
 
     return
+
 
 @contextmanager
 def capture_stdout():

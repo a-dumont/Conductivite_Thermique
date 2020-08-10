@@ -627,6 +627,7 @@ class Conductivity():
         data = np.array([self[i] for i in measures]).T
 
         U.write_to_file(filename, data, header, overwrite=overwrite)
+        return
 
     def Current(self, _min, _max, deg=5, T_max=100, N=100, *args, **kwargs):
         """

@@ -80,6 +80,7 @@ class mywindow(QtWidgets.QMainWindow):
 
         # Menu
         self.initialize_actionOpen()
+        self.initialize_actionSave()
         self.initialize_actionExit()
 
         # Tab widget
@@ -329,7 +330,7 @@ class mywindow(QtWidgets.QMainWindow):
         actionOpen.triggered.connect(self.loadfile_dialog)
         return
 
-    def initialize_actionOpen(self):
+    def initialize_actionSave(self):
         actionSave = self.ui.actionSave_2
         actionSave.triggered.connect(self.savefile_dialog)
         return
