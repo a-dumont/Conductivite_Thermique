@@ -437,6 +437,11 @@ class mywindow(QtWidgets.QMainWindow):
         filename = QtWidgets.QFileDialog.getSaveFileName(
             self, "Savefile", filename)[0]
 
+        if os.path.isdir(filename) is True:
+            return
+        else:
+            pass
+
         with U.capture_stdout() as get_value:
             self.data.Write_out(filename, overwrite=True)
             captured = get_value()
