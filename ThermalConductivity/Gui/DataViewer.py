@@ -261,7 +261,7 @@ class mywindow(QtWidgets.QMainWindow):
                 self.ui.label_filename.setText("No analyzed data to plot")
             else:
                 if hasattr(self.data, "Plot_all"):
-                    filename = self.data.filename
+                    filename = self.data["filename"]
                     filename = os.path.split(filename)[1]
                     filename = os.path.splitext(filename)[0]+".pdf"
                     filename = QtWidgets.QFileDialog.getSaveFileName(
@@ -303,7 +303,7 @@ class mywindow(QtWidgets.QMainWindow):
                 self.ui.label_filename.setText("No analyzed data to plot")
             else:
                 if hasattr(self.data, "Plot_all"):
-                    filename = self.data.filename
+                    filename = self.data["filename"]
                     filename = os.path.split(filename)[1]
                     filename = os.path.splitext(filename)[0]+".pdf"
                     filename = QtWidgets.QFileDialog.getSaveFileName(
