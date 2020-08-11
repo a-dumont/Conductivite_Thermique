@@ -267,7 +267,7 @@ class mywindow(QtWidgets.QMainWindow):
                     filename = QtWidgets.QFileDialog.getSaveFileName(
                         self, "Save Plot all", filename)[0]
                     if filename == "":
-                        pass
+                        return
                     else:
                         parameters = self.parameters
                         self.data.Plot_all("-o", parameters=parameters,
@@ -282,9 +282,9 @@ class mywindow(QtWidgets.QMainWindow):
             else:
                 if hasattr(self.dataset, "Plot_all"):
                     filename = QtWidgets.QFileDialog.getSaveFileName(
-                        self, "Save Plot all")[0]
+                        self, "Save Plot all","")[0]
                     if filename == "":
-                        pass
+                        return
                     else:
                         parameters = self.parameters
                         self.dataset.Plot_all("-o", parameters=parameters,
@@ -309,7 +309,7 @@ class mywindow(QtWidgets.QMainWindow):
                     filename = QtWidgets.QFileDialog.getSaveFileName(
                         self, "Save Plot all", filename)[0]
                     if filename == "":
-                        pass
+                        return
                     else:
                         parameters = self.parameters
                         self.data.Plot_fancy("-o", parameters=parameters,
@@ -324,9 +324,9 @@ class mywindow(QtWidgets.QMainWindow):
             else:
                 if hasattr(self.dataset, "Plot_all"):
                     filename = QtWidgets.QFileDialog.getSaveFileName(
-                        self, "Save Plot all")[0]
+                        self, "Save Plot all","")[0]
                     if filename == "":
-                        pass
+                        return
                     else:
                         params = self.parameters
                         out = self.dataset.Plot_fancy("-o", parameters=params,
