@@ -270,8 +270,8 @@ class mywindow(QtWidgets.QMainWindow):
                         pass
                     else:
                         parameters = self.parameters
-                        data.Plot_all("-o", parameters=parameters,
-                                      filename=filename, show=False)
+                        self.data.Plot_all("-o", parameters=parameters,
+                                           filename=filename, show=False)
                 else:
                     self.ui.label_filename.setText(
                         "Selected method as no Plot_all function")
@@ -287,8 +287,8 @@ class mywindow(QtWidgets.QMainWindow):
                         pass
                     else:
                         parameters = self.parameters
-                        dataset.Plot_all("-o", parameters=parameters,
-                                         filename=filename, show=False)
+                        self.dataset.Plot_all("-o", parameters=parameters,
+                                              filename=filename, show=False)
                 else:
                     self.ui.label_filename.setText(
                         "Selected method as no Plot_all function")
@@ -312,8 +312,8 @@ class mywindow(QtWidgets.QMainWindow):
                         pass
                     else:
                         parameters = self.parameters
-                        data.Plot_fancy("-o", parameters=parameters,
-                                        filename=filename, show=False)
+                        self.data.Plot_fancy("-o", parameters=parameters,
+                                             filename=filename, show=False)
                 else:
                     self.ui.label_filename.setText(
                         "Selected method as no Plot_fancy function")
@@ -328,9 +328,10 @@ class mywindow(QtWidgets.QMainWindow):
                     if filename == "":
                         pass
                     else:
-                        parameters = self.parameters
-                        out = dataset.Plot_fancy("-o", parameters=parameters,
-                                                 filename=filename, show=False)
+                        params = self.parameters
+                        out = self.dataset.Plot_fancy("-o", parameters=params,
+                                                      filename=filename,
+                                                      show=False)
                 else:
                     self.ui.label_filename.setText(
                         "Selected method as no Plot_fancy function")
