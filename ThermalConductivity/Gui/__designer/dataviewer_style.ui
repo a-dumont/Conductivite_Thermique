@@ -340,6 +340,20 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QPushButton" name="pushButtonPlotAll">
+              <property name="text">
+               <string>Plot All</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButtonPlotFancy">
+              <property name="text">
+               <string>Plot Fancy</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
          </layout>

@@ -90,6 +90,8 @@ class mywindow(QtWidgets.QMainWindow):
         # Plot
         self.initialize_pushButton_plot()
         self.initialize_pushButton_clearPlot()
+        self.initialize_pushButton_plotAll()
+        self.initialize_pushButton_plotFancy()
 
     def resizeEvent(self, event):
         self.resized.emit()
@@ -250,6 +252,90 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.plotWidget.canvas.draw()
         return
 
+    def PlotAll(self):
+        tab = self.ui.tabWidget
+        current = tab.tabText(tab.currentIndex())
+
+        if current == "Analysis":
+            if hasattr(self, data) is False:
+                self.ui.label_filename.setText("No analyzed data to plot")
+            else:
+                if hasattr(self.data, "Plot_all"):
+                    filename = self.data.filename
+                    filename = os.path.split(filename)[1]
+                    filename = os.path.splitext(filename)[0]+".pdf"
+                    filename = QtWidgets.QFileDialog.getSaveFileName(
+                        self, "Save Plot all", filename)[0]
+                    if filename == "":
+                        pass
+                    else:
+                        parameters = self.parameters
+                        data.Plot_all("-o", parameters=parameters,
+                                      filename=filename, show=False)
+                else:
+                    self.ui.label_filename.setText(
+                        "Selected method as no Plot_all function")
+
+        elif current == "Comparison":
+            if hasattr(self, dataset) is False:
+                self.ui.label_filename.setText("No analyzed data to plot")
+            else:
+                if hasattr(self.dataset, "Plot_all"):
+                    filename = QtWidgets.QFileDialog.getSaveFileName(
+                        self, "Save Plot all")[0]
+                    if filename == "":
+                        pass
+                    else:
+                        parameters = self.parameters
+                        dataset.Plot_all("-o", parameters=parameters,
+                                         filename=filename, show=False)
+                else:
+                    self.ui.label_filename.setText(
+                        "Selected method as no Plot_all function")
+        return
+
+    def PlotFancy(self):
+        tab = self.ui.tabWidget
+        current = tab.tabText(tab.currentIndex())
+
+        if current == "Analysis":
+            if hasattr(self, data) is False:
+                self.ui.label_filename.setText("No analyzed data to plot")
+            else:
+                if hasattr(self.data, "Plot_all"):
+                    filename = self.data.filename
+                    filename = os.path.split(filename)[1]
+                    filename = os.path.splitext(filename)[0]+".pdf"
+                    filename = QtWidgets.QFileDialog.getSaveFileName(
+                        self, "Save Plot all", filename)[0]
+                    if filename == "":
+                        pass
+                    else:
+                        parameters = self.parameters
+                        data.Plot_fancy("-o", parameters=parameters,
+                                        filename=filename, show=False)
+                else:
+                    self.ui.label_filename.setText(
+                        "Selected method as no Plot_fancy function")
+
+        elif current == "Comparison":
+            if hasattr(self, dataset) is False:
+                self.ui.label_filename.setText("No analyzed data to plot")
+            else:
+                if hasattr(self.dataset, "Plot_all"):
+                    filename = QtWidgets.QFileDialog.getSaveFileName(
+                        self, "Save Plot all")[0]
+                    if filename == "":
+                        pass
+                    else:
+                        parameters = self.parameters
+                        out = dataset.Plot_fancy("-o", parameters=parameters,
+                                                 filename=filename, show=False)
+                else:
+                    self.ui.label_filename.setText(
+                        "Selected method as no Plot_fancy function")
+        return
+
     def toggle_parameter(self):
         menu = self.parameters_menu
         parameters = []
@@ -334,6 +420,15 @@ class mywindow(QtWidgets.QMainWindow):
         actionSave = self.ui.actionSave_2
         actionSave.triggered.connect(self.savefile_dialog)
         return
+
+    def initialize_pushButton_plotAll(self):
+        button = self.ui.pushButtonPlotAll
+        button.clicked.connect(self.PlotAll)
+        return
+
+    def initialize_pushButton_plotFancy(self):
+        button = self.ui.pushButtonPlotFancy
+        button.clicked.connect(self.PlotFancy)
 
     def loadfile_dialog(self):
         cur_dir = QtCore.QDir.currentPath()
