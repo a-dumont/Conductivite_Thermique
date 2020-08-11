@@ -257,7 +257,7 @@ class mywindow(QtWidgets.QMainWindow):
         current = tab.tabText(tab.currentIndex())
 
         if current == "Analysis":
-            if hasattr(self, data) is False:
+            if hasattr(self, "data") is False:
                 self.ui.label_filename.setText("No analyzed data to plot")
             else:
                 if hasattr(self.data, "Plot_all"):
@@ -277,7 +277,7 @@ class mywindow(QtWidgets.QMainWindow):
                         "Selected method as no Plot_all function")
 
         elif current == "Comparison":
-            if hasattr(self, dataset) is False:
+            if hasattr(self, "dataset") is False:
                 self.ui.label_filename.setText("No analyzed data to plot")
             else:
                 if hasattr(self.dataset, "Plot_all"):
@@ -299,7 +299,7 @@ class mywindow(QtWidgets.QMainWindow):
         current = tab.tabText(tab.currentIndex())
 
         if current == "Analysis":
-            if hasattr(self, data) is False:
+            if hasattr(self, "data") is False:
                 self.ui.label_filename.setText("No analyzed data to plot")
             else:
                 if hasattr(self.data, "Plot_all"):
@@ -319,7 +319,7 @@ class mywindow(QtWidgets.QMainWindow):
                         "Selected method as no Plot_fancy function")
 
         elif current == "Comparison":
-            if hasattr(self, dataset) is False:
+            if hasattr(self, "dataset") is False:
                 self.ui.label_filename.setText("No analyzed data to plot")
             else:
                 if hasattr(self.dataset, "Plot_all"):
