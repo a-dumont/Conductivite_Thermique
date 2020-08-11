@@ -271,7 +271,8 @@ class mywindow(QtWidgets.QMainWindow):
                     else:
                         parameters = self.parameters
                         self.data.Plot_all("-o", parameters=parameters,
-                                           filename=filename, show=False)
+                                           filename=filename, show=False,
+                                           overwrite=True)
                 else:
                     self.ui.label_filename.setText(
                         "Selected method as no Plot_all function")
@@ -282,13 +283,14 @@ class mywindow(QtWidgets.QMainWindow):
             else:
                 if hasattr(self.dataset, "Plot_all"):
                     filename = QtWidgets.QFileDialog.getSaveFileName(
-                        self, "Save Plot all","")[0]
+                        self, "Save Plot all", "")[0]
                     if filename == "":
                         return
                     else:
                         parameters = self.parameters
                         self.dataset.Plot_all("-o", parameters=parameters,
-                                              filename=filename, show=False)
+                                              filename=filename, show=False,
+                                              overwrite=True)
                 else:
                     self.ui.label_filename.setText(
                         "Selected method as no Plot_all function")
@@ -313,7 +315,8 @@ class mywindow(QtWidgets.QMainWindow):
                     else:
                         parameters = self.parameters
                         self.data.Plot_fancy("-o", parameters=parameters,
-                                             filename=filename, show=False)
+                                             filename=filename, show=False,
+                                             overwrite=True)
                 else:
                     self.ui.label_filename.setText(
                         "Selected method as no Plot_fancy function")
@@ -324,14 +327,15 @@ class mywindow(QtWidgets.QMainWindow):
             else:
                 if hasattr(self.dataset, "Plot_all"):
                     filename = QtWidgets.QFileDialog.getSaveFileName(
-                        self, "Save Plot all","")[0]
+                        self, "Save Plot all", "")[0]
                     if filename == "":
                         return
                     else:
                         params = self.parameters
                         out = self.dataset.Plot_fancy("-o", parameters=params,
                                                       filename=filename,
-                                                      show=False)
+                                                      show=False,
+                                                      overwrite=True)
                 else:
                     self.ui.label_filename.setText(
                         "Selected method as no Plot_fancy function")
