@@ -21,6 +21,6 @@ setuptools.setup(
     install_requires=[
           'numpy', 'matplotlib', 'PyQt5'
     ],
-    python_requires='>=3.6'
+    python_requires='>=3.7'
 
 )
