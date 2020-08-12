@@ -460,10 +460,9 @@ class mywindow(QtWidgets.QMainWindow):
 
     def clearFile(self):
         if hasattr(self, "filename") is True:
-            filename = self.filename
             delattr(self, "filename")
         else:
-            pass
+            return
         label = ("No file loaded")
         self.ui.label_filename.setText(label)
         return
