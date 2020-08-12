@@ -185,6 +185,25 @@ class Measurement():
         else:
             pass
 
+        if "T_av" and "kxy" in self.measures:
+            self.measures.append("kxy/T")
+            self["kxy/T"] = self["kxy"]/self["T_av"]
+        else:
+            pass
+
+        if "T_av" and "kxy" in self.measures:
+            if self["H"] != "0.0":
+                self.measures.append("kxy/TH")
+                try:
+                    H = float(self["H"])
+                    self["kxy/TH"] = self["kxy"]/self["T_av"]
+                except ValueError:
+                    pass
+            else:
+                pass
+        else:
+            pass
+
         if "Tp" and "Tm" in self.measures:
             self.measures.append("Tp_Tm")
             self["Tp_Tm"] = None

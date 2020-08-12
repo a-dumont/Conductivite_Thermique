@@ -35,6 +35,8 @@ measurements_dict["dTy"] = ["dTy(K)", "dTy (K)"]
 measurements_dict["I"] = ["I(A)", "I (A)"]
 measurements_dict["dTabs"] = ["dTabs", "dT_abs"]
 measurements_dict["kxx/T"] = ["kxx/T"]
+measurements_dict["kxy/T"] = ["kxy/T"]
+measurements_dict["kxy/TH"] = ["kxy/TH"]
 measurements_dict["Resistance"] = ["Resistance"]
 measurements_dict["dTx/T"] = ["dTx/T"]
 measurements_dict["Tp_Tm"] = ["Tp_Tm"]
@@ -51,6 +53,7 @@ parameters_dict["mount"] = ["mount"]
 parameters_dict["sample"] = ["Sample", "sample"]
 parameters_dict["date"] = ["Date", "date"]
 parameters_dict["probe"] = ["probe", "Probe"]
+parameters_dict["doping"] = ["doping"]
 
 # Log file measurements
 log_data_dict = dict()
