@@ -196,7 +196,7 @@ class Measurement():
                 self.measures.append("kxy/TH")
                 try:
                     H = float(self["H"])
-                    self["kxy/TH"] = self["kxy"]/self["T_av"]
+                    self["kxy/TH"] = self["kxy"]/self["T_av"]/H
                 except ValueError:
                     pass
             else:
