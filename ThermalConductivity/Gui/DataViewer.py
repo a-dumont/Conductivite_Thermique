@@ -171,6 +171,7 @@ class mywindow(QtWidgets.QMainWindow):
                 pass
         dataset = self.dataset
         filename = self.filename
+        box = self.ui.comboBox_Comparison
         method = self.comparison_methods[box.currentText()]
         measurement = method(filename)
         dataset.Add_measurements([measurement])
