@@ -37,8 +37,94 @@ import ThermalConductivity.Utilities.__utilities as U
 
 class Measurement():
     """
-    This class is used to store the data from a single measurement in a standard
-    format independantly of how to data file is structured.
+    This class is a template for creating comparison classes, all new comparison
+    classes should inherit this class.
+    """
+
+    def __init__(self):
+        self.measures = []
+        self.parameters = []
+        return
+
+    def Store_as_measure(self, data, key):
+        """
+        Insert a new variable in the dataset with the given label.
+        The variable will be accessible by calling self[key] and will be shown
+        in self.measures
+
+        Parameters:
+        ------------------------------------------------------------------------
+        data:   any
+                    The data to store
+        key:        string
+                    The key to access the variable.
+        """
+        if type(key) != str:
+            raise ValueError("key must be a string")
+        self[key] = data
+        if key not in self.measures:
+            self.measures.append(key)
+        else:
+            pass
+        return
+
+    def Store_as_parameter(self, data, key):
+        """
+        Insert a new parameter in the dataset with the given label.
+        The variable will be accessible by calling self[key] and will be shown
+        in self.parameters.
+
+        Parameters:
+        ------------------------------------------------------------------------
+        data:   any
+                    The data to store
+        key:        string
+                    The key to access the variable.
+        """
+        if type(key) != str:
+            raise ValueError("key must be a string")
+        self[key] = data
+        if key not in self.parameters:
+            self.parameters.append(key)
+        else:
+            pass
+        return
+
+    def __getitem__(self, key):
+        if type(key) is str:
+            return getattr(self, "__"+key)
+        else:
+            M = self.__class__()
+            for i in self.measures:
+                if i != "Tp_Tm":
+                    setattr(M, "__"+i, getattr(self, "__"+i)[key])
+                else:
+                    setattr(M, "__"+i, None)
+
+            for i in self.parameters:
+                setattr(M, "__"+i, getattr(self, "__"+i))
+
+            M.measures = self.measures
+            M.parameters = self.parameters
+            return M
+
+    def __setitem__(self, key, value):
+        if type(key) is str:
+            setattr(self, "__"+key, value)
+        else:
+            pass
+        return
+
+    def __delitem__(self, key):
+        delattr(self, "__"+key)
+        return
+
+
+class Conductivity(Measurement):
+    """
+    This class is used to store the data from a single thermal conductivity
+    measurement in a standard format independantly of how to data file is
+    structured, but works better if the file is from Analysis.Conductivity.
     """
 
     # Creation of a dictionnary to sort data
@@ -68,29 +154,23 @@ class Measurement():
                 The name of the sample.
         """
 
-        self.measures = []
-        self.parameters = []
+        super().__init__()
 
         if filename is not None:
             filename = os.path.abspath(filename)
             data = U.read_file_treated(filename)
             header = U.read_header(filename)
             for key, value in data.items():
-                self[key] = value
-                self.measures.append(key)
+                self.Store_as_measure(value, key)
 
-            self["H"] = U.find_H(filename, header)
-            self["date"] = U.find_date(filename, header)
-            self["mount"] = U.find_mount(filename, header)
-            self["sample"] = U.find_sample(filename, header)
-            self["probe"] = U.find_probe(filename, header)
-
-            self.parameters += ["H", "date", "mount", "sample", "probe"]
+            self.Store_as_parameter(U.find_H(filename, header), "H")
+            self.Store_as_parameter(U.find_date(filename, header), "date")
+            self.Store_as_parameter(U.find_mount(filename, header), "mount")
+            self.Store_as_parameter(U.find_sample(filename, header), "sample")
+            self.Store_as_parameter(U.find_probe(filename, header), "probe")
 
         for key, value in kwargs.items():
-            self[key] = value
-            if key not in self.parameters:
-                self.parameters.append(key)
+            self.Store_as_parameter(value, key)
 
         if hasattr(self, "__sample") is False:
             setattr(self, "__sample", "unknown")
@@ -127,35 +207,6 @@ class Measurement():
         """
         data = np.array([getattr(self, "__"+key) for key in self.measures])
         return data
-
-    def __getitem__(self, key):
-        if type(key) is str:
-            return getattr(self, "__"+key)
-        else:
-            M = Measurement()
-            for i in self.measures:
-                if i != "Tp_Tm":
-                    setattr(M, "__"+i, getattr(self, "__"+i)[key])
-                else:
-                    setattr(M, "__"+i, None)
-
-            for i in self.parameters:
-                setattr(M, "__"+i, getattr(self, "__"+i))
-
-            M.measures = self.measures
-            M.parameters = self.parameters
-            return M
-
-    def __setitem__(self, key, value):
-        if type(key) is str:
-            setattr(self, "__"+key, value)
-        else:
-            pass
-        return
-
-    def __delitem__(self, key):
-        delattr(self, "__"+key)
-        return
 
     def __add_measure(self):
         if "T_av" and "kxx" in self.measures:
