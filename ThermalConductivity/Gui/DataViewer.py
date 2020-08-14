@@ -104,6 +104,13 @@ class mywindow(QtWidgets.QMainWindow):
 
     def initialize_tab_comparison(self):
         tab = self.ui.tab_comparision
+        self.comparison_methods = {key: value for key, value in Comp.__dict__.items()
+                                   if callable(value)}
+        box_methods = self.ui.comboBox_Comparison
+        box_methods .addItems(
+            [i for i in self.comparison_methods
+             if i != "Measurement" and i != "Data_Set"])
+
         button = self.ui.pushButtonComparisonAddFile
         button.clicked.connect(self.addToDatasetFromFile)
         button2 = self.ui.pushButtonComparisonAddAnalysis
@@ -164,7 +171,8 @@ class mywindow(QtWidgets.QMainWindow):
                 pass
         dataset = self.dataset
         filename = self.filename
-        measurement = Comp.Measurement(filename)
+        method = self.comparison_methods[box.currentText()]
+        measurement = method(filename)
         dataset.Add_measurements([measurement])
         self.dataset = dataset
         filename = os.path.split(filename)[1]
