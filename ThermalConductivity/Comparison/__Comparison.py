@@ -127,12 +127,6 @@ class Conductivity(Measurement):
     structured, but works better if the file is from Analysis.Conductivity.
     """
 
-    # Creation of a dictionnary to sort data
-    __dict_measures = D.measurements_dict
-
-    # Creation of a dictionnary to sort other info
-    __dict_parameters = D.parameters_dict
-
     def __init__(self, filename=None, **kwargs):
         """
         Used to initialize a Measurement object
@@ -155,6 +149,8 @@ class Conductivity(Measurement):
         """
 
         super().__init__()
+        self["dict_measures"] = D.measurements_dict
+        self["dict_parameters"] = D.parameters_dict
 
         if filename is not None:
             filename = os.path.abspath(filename)
@@ -311,9 +307,9 @@ class Data_Set():
         self.measurements = measurements
         if len(measurements) != 0:
             m = measurements[0]
-            self.__list_measures = list(m._Measurement__dict_measures.keys())
+            self.__list_measures = list(m["dict_measures"].keys())
             self.__list_parameters = list(
-                m._Measurement__dict_parameters.keys())
+                m["dict_parameters"].keys())
             self.__find_measures()
         else:
             self.measures = []
@@ -382,9 +378,9 @@ class Data_Set():
         self.measurements += measurements
         if len(self.measurements) == 1:
             m = measurements[0]
-            self.__list_measures = list(m._Measurement__dict_measures.keys())
+            self.__list_measures = list(m["dict_measures"].keys())
             self.__list_parameters = list(
-                m._Measurement__dict_parameters.keys())
+                m["dict_parameters"].keys())
 
         self.__find_measures()
 
