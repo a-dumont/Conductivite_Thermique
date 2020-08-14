@@ -569,7 +569,7 @@ class Conductivity(Measurement):
         Returns a Comparison.Measurement object
         """
 
-        measurement = Comp.Measurement()
+        measurement = Comp.Conductivity()
         for m in self.measures:
             measurement[m] = self[m]
         for p in self.parameters:
