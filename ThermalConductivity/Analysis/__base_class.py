@@ -26,7 +26,10 @@ class Measurement():
         if type(key) != str:
             raise ValueError("key must be a string")
         self[key] = data
-        self.measures.append(key)
+        if key not in self.measures:
+            self.measures.append(key)
+        else:
+            pass
         return
 
     def Store_as_parameter(self, data, key):
@@ -45,7 +48,10 @@ class Measurement():
         if type(key) != str:
             raise ValueError("key must be a string")
         self[key] = data
-        self.parameters.append(key)
+        if key not in self.parameters:
+            self.parameters.append(key)
+        else:
+            pass
         return
 
     def Store_as_raw_data(self, data, key):
@@ -64,7 +70,10 @@ class Measurement():
         if type(key) != str:
             raise ValueError("key must be a string")
         self[key] = data
-        self.raw_data.append(key)
+        if key not in self.raw_data:
+            self.raw_data.append(key)
+        else:
+            pass
         return
 
     def __getitem__(self, key):
