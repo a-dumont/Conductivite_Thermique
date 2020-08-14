@@ -23,7 +23,7 @@ from ThermalConductivity.Utilities import Database as D
 from ThermalConductivity.Thermometry import seebeck_thermometry
 from ThermalConductivity import Visualization as V
 from ThermalConductivity import Comparison as Comp
-from ThermalConductivity.Analysis import Measurement
+from ThermalConductivity.Analysis.__base_class import Measurement
 
 ################################################################################
 #                          ____ _        _    ____ ____                        #
