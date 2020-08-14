@@ -1,15 +1,19 @@
 import sys
 import os
 import datetime
+
 import numpy as np
 import numpy.polynomial.polynomial as npp
+
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
-from ThermalConductivity.Analysis import Functions as F
-from ThermalConductivity import Utilities as U
-from ThermalConductivity.Utilities import Database as D
-from ThermalConductivity.Thermometry import seebeck_thermometry
-from ThermalConductivity import Visualization as V
+
+import ThermalConductivity.Analysis.Functions.__functions as F
+import ThermalConductivity.Utilities.__utilities as U
+import ThermalConductivity.Utilities.Database.__database as D
+import ThermalConductivity.Visualization.__plots as V
+from ThermalConductivity.Thermometry.__Thermometry import seebeck_thermometry
+from ThermalConductivity.Analysis.__base_class import Measurement
 
 ################################################################################
 #                          ____ _        _    ____ ____                        #
@@ -20,20 +24,17 @@ from ThermalConductivity import Visualization as V
 ################################################################################
 
 
-class Log():
+class Log(Measurement):
     """
     This class is meant to read data from a log file for debugging
     """
 
     def __init__(self, filename=None):
+        super().__init__()
 
         # Importing dictionaries
         self["dict_measures"] = D.log_data_dict
         self["dict_parameters"] = D.parameters_dict
-
-        # Initializing lists
-        self.measures = []
-        self.parameters = []
 
         if filename is not None:
             # Read the file
@@ -41,19 +42,17 @@ class Log():
             header = U.read_header(filename)
 
             # Find the parameters
-            self["H"] = U.find_H(filename)
-            self["date"] = U.find_date(filename)
-            self["mount"] = U.find_mount(filename)
-            self["probe"] = U.find_probe(filename, header)
-            self["sample"] = U.find_sample(filename, header)
-            self.parameters += ["H", "date", "mount", "probe", "sample"]
+            self.Store_as_parameter(U.find_H(filename), "H")
+            self.Store_as_parameter(U.find_date(filename), "date")
+            self.Store_as_parameter(U.find_mount(filename), "mount")
+            self.Store_as_parameter(U.find_probe(filename, header), "probe")
+            self.Store_as_parameter(U.find_sample(filename, header), "sample")
 
             # Find the measurements
             log_data = U.read_file_log(filename)
 
             for key, value in log_data.items():
-                self[key] = value
-                self.measures.append(key)
+                self.Store_as_measure(value, key)
 
         return
 
@@ -141,39 +140,3 @@ class Log():
             return
         else:
             return fig, ax
-
-    def __getitem__(self, key):
-        if type(key) is str:
-            return getattr(self, "__"+key)
-        else:
-            L = Log()
-
-            for i in self.measures:
-                if i != "Tp_Tm":
-                    setattr(L, "__"+i, getattr(self, "__"+i)[key])
-                else:
-                    setattr(L, "__"+i, None)
-            for i in self.parameters:
-                setattr(L, "__"+i, getattr(self, "__"+i))
-
-            misc = self.__dict__.keys()
-            for k in misc:
-                if hasattr(L, k) is True:
-                    pass
-                else:
-                    setattr(L, k, getattr(self, k))
-
-            L.measures = self.measures
-            L.parameters = self.parameters
-            return L
-
-    def __setitem__(self, key, value):
-        if type(key) is str:
-            setattr(self, "__"+key, value)
-        else:
-            pass
-        return
-
-    def __delitem__(self, key):
-        delattr(self, "__"+key)
-        return

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ThermalConductivity", # Replace with your own username
-    version="4.5.1",
+    version="5.0.0",
     author="Alexandre Dumont",
     author_email="alexandre.dumont3@usherbrooke.ca",
     description="A module to analyze thermal conductivity measurements",
@@ -21,6 +21,6 @@ setuptools.setup(
     install_requires=[
           'numpy', 'matplotlib', 'PyQt5'
     ],
-    python_requires='>=3.7'
+    python_requires='>=3.6'
 
 )
