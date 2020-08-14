@@ -15,13 +15,16 @@ contains the H, w,t and L values but they can also be specified manually
 
 import sys
 import os
+
 import numpy as np
+
 import matplotlib as mp
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
-from ThermalConductivity.Utilities import Database as D
-from ThermalConductivity import Visualization as V
-from ThermalConductivity import Utilities as U
+
+import ThermalConductivity.Utilities.Database.__database as D
+import ThermalConductivity.Visualization.__plots as V
+import ThermalConductivity.Utilities.__utilities as U
 
 ################################################################################
 #                 ____ _        _    ____ ____  _____ ____                     #

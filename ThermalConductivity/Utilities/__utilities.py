@@ -7,8 +7,11 @@ import sys
 import os
 import datetime
 import re
+
 import numpy as np
-import ThermalConductivity.Utilities.Database as D
+
+import ThermalConductivity.Utilities.Database.__database as D
+
 from matplotlib.backends.backend_pdf import PdfPages
 from io import StringIO
 from contextlib import contextmanager

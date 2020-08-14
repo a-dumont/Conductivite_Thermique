@@ -13,17 +13,20 @@ directory structure as the data folder.
 import sys
 import os
 import datetime
+
 import numpy as np
 import numpy.polynomial.polynomial as npp
+
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
-from ThermalConductivity.Analysis import Functions as F
-from ThermalConductivity import Utilities as U
-from ThermalConductivity.Utilities import Database as D
-from ThermalConductivity.Thermometry import seebeck_thermometry
-from ThermalConductivity import Visualization as V
-from ThermalConductivity import Comparison as Comp
+
+import ThermalConductivity.Analysis.Functions.__functions as F
+import ThermalConductivity.Utilities.__utilities as U
+import ThermalConductivity.Utilities.Database.__database as D
+import ThermalConductivity.Visualization.__plots as V
+import ThermalConductivity.Comparison.__Comparison as Comp
 from ThermalConductivity.Analysis.__base_class import Measurement
+from ThermalConductivity.Thermometry.__Thermometry import seebeck_thermometry
 
 ################################################################################
 #                          ____ _        _    ____ ____                        #
