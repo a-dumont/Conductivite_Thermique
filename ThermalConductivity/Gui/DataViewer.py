@@ -116,7 +116,8 @@ class mywindow(QtWidgets.QMainWindow):
         self.analysis_methods = {key: value for key, value in A.__dict__.items()
                                  if callable(value)}
         box_methods = self.ui.comboBoxAnalysisMethod
-        box_methods.addItems([i for i in self.analysis_methods])
+        box_methods.addItems(
+            [i for i in self.analysis_methods if i != "Measurement"])
 
         compute = self.ui.pushButton_AnalysisCompute
         compute.clicked.connect(self.analyze_data)

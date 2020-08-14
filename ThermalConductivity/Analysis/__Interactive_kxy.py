@@ -23,6 +23,7 @@ from ThermalConductivity.Utilities import Database as D
 from ThermalConductivity.Thermometry import seebeck_thermometry
 from ThermalConductivity import Visualization as V
 from ThermalConductivity import Comparison as Comp
+from ThermalConductivity.Analysis import Measurement
 
 ################################################################################
 #                          ____ _        _    ____ ____                        #
@@ -33,32 +34,22 @@ from ThermalConductivity import Comparison as Comp
 ################################################################################
 
 
-class Conductivity():
+class Conductivity(Measurement):
     """
     This is the main class of the program. It contains all the
     data and other information about the sample. Also contains
     all the analysis functions for both probes.
     """
 
-    # Creation of a dictionnary to sort data
-    __dict_measures = D.measurements_dict
-
-    # Creation of a dictionnary to sort raw data
-    __dict_raw = D.raw_data_dict
-
-    # Creation of a dictionnary to sort other info
-    __dict_parameters = D.parameters_dict
-
-    # Creation of an internal dictionnary used to match measurements to their
-    # respective axis titles
-    __dict_axis = V.axis_labels
-    __dict_labels = V.legend_labels
-
     def __init__(self, filename=None, w=1e-6, t=1e-6, L=1e-6, sign=1, **kwargs):
+        # Initialize the Measurement class
+        super().__init__()
 
-        self.parameters = []
-        self.measures = []
-        self.raw_data = []
+        # Add dictionnaries
+        self["dict_measures"] = D.measurements_dict
+        self["dict_raw"] = D.raw_data_dict
+        self["dict_parameters"] = D.parameters_dict
+
         # Check for some specific kwargs and update kwargs
         self["force_kxy"], kwargs = self.__check_force_kxy(**kwargs)
         self["symmetrize"], kwargs = self.__check_symmetrize(**kwargs)
@@ -99,8 +90,7 @@ class Conductivity():
                     raw_data = U.read_file_raw(filename)
 
                 for key, values in raw_data.items():
-                    self[key] = values
-                    self.raw_data.append(key)
+                    self.Store_as_raw_data(values,key)
 
                 self.__Analyze(self["gain"])
                 self.__add_measure()
@@ -110,15 +100,12 @@ class Conductivity():
                 data = U.read_file_treated(filename)
 
                 for key, values in data.items():
-                    self[key] = values
-                    self.measures.append(key)
+                    self.Store_as_measure(values,key)
                     self.__add_measure()
 
         # Remaining kwargs are set as parameters
         for key, value in kwargs.items():
-            self[key] = value
-            self.parameters.append(key)
-
+            self.Store_as_parameter(value,key)
         return
 
     def __check_force_kxy(self, **kwargs):
@@ -168,7 +155,7 @@ class Conductivity():
 
         raw_data = 0
         measures = 0
-        for key, values in self.__dict_raw.items():
+        for key, values in self["dict_raw"].items():
             for v in values:
                 if v in columns:
                     raw_data += 1
@@ -264,11 +251,11 @@ class Conductivity():
         kxx = F.compute_kxx(I, dTx, self["w"], self["t"], self["L"])
 
         # Store values in self
-        self.store_as_measure(T_av, "T_av")
-        self.store_as_measure(Tp, "Tp")
-        self.store_as_measure(Tm, "Tm")
-        self.store_as_measure(dTx, "dTx")
-        self.store_as_measure(kxx, "kxx")
+        self.Store_as_measure(T_av, "T_av")
+        self.Store_as_measure(Tp, "Tp")
+        self.Store_as_measure(Tm, "Tm")
+        self.Store_as_measure(dTx, "dTx")
+        self.Store_as_measure(kxx, "kxx")
 
     def __vti_analysis(self, gain):
         self.__compute_and_store_vti_physical_properties(gain)
@@ -285,12 +272,12 @@ class Conductivity():
         physicial_properties = F.vti_thermocouple_calibration_loop(
             dTabs_0, dTabs_Q, dTx_0, dTx_Q, T0, gain)
         for key, value in physicial_properties.items():
-            self.store_as_measure(value, key)
+            self.Store_as_measure(value, key)
 
         # Compute kxx
         kxx = F.compute_kxx(
             I, physicial_properties["dTx"], self["w"], self["t"], self["L"])
-        self.store_as_measure(kxx, "kxx")
+        self.Store_as_measure(kxx, "kxx")
 
     def __compute_and_store_dTy_and_kxy(self, gain):
         # Compute dty
@@ -298,12 +285,12 @@ class Conductivity():
         dTy = F.compute_thermocouple(
             self["dTy_0"], self["dTy_Q"], reference_temperature, gain)
         dTy *= self["sign"]
-        self.store_as_measure(dTy, "dTy")
+        self.Store_as_measure(dTy, "dTy")
 
         # Compute kxy
         kxy = F.compute_kxy(
             self["kxx"], self["dTx"], dTy, self["w"], self["L"])
-        self.store_as_measure(kxy, "kxy")
+        self.Store_as_measure(kxy, "kxy")
 
     def __add_parameters(self, width, thickness, length):
 
@@ -312,22 +299,16 @@ class Conductivity():
         parameters = []
 
         # Geometric parameters
-        self["w"] = width
-        self["t"] = thickness
-        self["L"] = length
+        self.Store_as_parameter(width, "w")
+        self.Store_as_parameter(thickness, "t")
+        self.Store_as_parameter(length, "L")
 
         # Other parameters
-        self["H"] = U.find_H(filename, header)
-        self["date"] = U.find_date(filename, header)
-        self["mount"] = U.find_mount(filename, header)
-        self["sample"] = U.find_sample(filename, header)
-        self["probe"] = U.find_probe(filename, header)
-
-        # Add to parameters
-        parameters += ["H", "date", "mount", "sample", "probe"]
-        parameters += ["w", "t", "L"]
-
-        self.parameters += parameters
+        self.Store_as_parameter(U.find_H(filename, header), "H")
+        self.Store_as_parameter(U.find_date(filename, header), "date")
+        self.Store_as_parameter(U.find_mount(filename, header), "mount")
+        self.Store_as_parameter(U.find_sample(filename, header), "sample")
+        self.Store_as_parameter(U.find_probe(filename, header), "probe")
 
         return
 
@@ -386,23 +367,6 @@ class Conductivity():
             self["Tp_Tm"] = None
 
         return
-
-    def store_as_measure(self, variable, key):
-        """
-        Insert a new variable in the dataset with the given label.
-        The variable will be accessible by calling self[key].
-
-        Parameters:
-        ------------------------------------------------------------------------
-        variable:   any
-                    The variable to store
-        key:        string
-                    The key to access the variable.
-        """
-        if type(key) != str:
-            raise ValueError("key must be a string")
-        self[key] = variable
-        self.measures.append(key)
 
     def Plot(self, key, *args, **kwargs):
         """
@@ -740,47 +704,8 @@ class Conductivity():
 
         return
 
-    def __getitem__(self, key):
-        if type(key) is str:
-            return getattr(self, "__"+key)
-        else:
-            C = Conductivity()
-
-            for i in self.raw_data:
-                setattr(C, "__"+i, getattr(self, "__"+i)[key])
-
-            for i in self.measures:
-                if i != "Tp_Tm":
-                    setattr(C, "__"+i, getattr(self, "__"+i)[key])
-                else:
-                    setattr(C, "__"+i, None)
-            for i in self.parameters:
-                setattr(C, "__"+i, getattr(self, "__"+i))
-
-            misc = self.__dict__.keys()
-            for k in misc:
-                if hasattr(C, k) is True:
-                    pass
-                else:
-                    setattr(C, k, getattr(self, k))
-
-            C.measures = self.measures
-            C.parameters = self.parameters
-            return C
-
-    def __setitem__(self, key, value):
-        if type(key) is str:
-            setattr(self, "__"+key, value)
-        else:
-            pass
-        return
-
-    def __delitem__(self, key):
-        delattr(self, "__"+key)
-        return
-
     def Get_known_measures(self):
-        return list(self.__dict_measures.keys())
+        return list(self["dict_measures"].keys())
 
 ################################################################################
 #                       ____   ____ ____  ___ ____ _____                       #
