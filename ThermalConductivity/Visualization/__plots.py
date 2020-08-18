@@ -123,7 +123,7 @@ def Plot(xdata, ydata, xkey, ykey, *args, **kwargs):
                     if key in legend_labels:
                         labels.append(legend_labels[key] % (parameters[key]))
                     else:
-                        labels.append(parameters[key])
+                        labels.append(str(parameters[key]))
                 else:
                     raise TypeError("parameters must be strings")
             label = ", ".join(labels)

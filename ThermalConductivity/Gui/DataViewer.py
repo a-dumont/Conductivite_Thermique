@@ -386,11 +386,14 @@ class mywindow(QtWidgets.QMainWindow):
         canvas.figure.add_axes(ax)
         canvas.ax.clear()
         canvas.draw()
-        for i in self.parameters_menu.actions():
-            if i.isChecked() is True:
-                i.setChecked(False)
-            else:
-                pass
+        if hasattr(self,"parameters_menu") is True:
+            for i in self.parameters_menu.actions():
+                if i.isChecked() is True:
+                    i.setChecked(False)
+                else:
+                    pass
+        else:
+            pass
         return
 
     def initialize_pushButton_loadFile(self):
