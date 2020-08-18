@@ -51,6 +51,9 @@ legend_labels = dict()
 legend_labels["H"] = r"H = %sT"
 legend_labels["sample"] = r"Sample: %s"
 legend_labels["date"] = r"%s"
+legend_labels["w"] = r"w = %sm"
+legend_labels["t"] = r"t = %sm"
+legend_labels["L"] = r"L = %sm"
 
 
 def Plot(xdata, ydata, xkey, ykey, *args, **kwargs):
@@ -125,31 +128,35 @@ def Plot(xdata, ydata, xkey, ykey, *args, **kwargs):
                     else:
                         labels.append(parameters[key])
                 else:
-                    labels.append(str(parameters[key]))
-            label = ", ".join(labels)
-            label_size = len(labels)
+                     if key in legend_labels:
+                        p = str(parameters[key])
+                        labels.append(legend_labels[key] % (p))
+                     else:
+                        labels.append(str(parameters[key]))
+            label=", ".join(labels)
+            label_size=len(labels)
             if label_size <= 1:
-                label_font = axis_fs
+                label_font=axis_fs
             elif label_size == 2:
-                label_font = axis_fs-2
+                label_font=axis_fs-2
             else:
-                label_font = 10
+                label_font=10
         else:
             raise TypeError("parameters must be dict containing strings")
 
     else:
-        label_size = 0
-        label = ""
+        label_size=0
+        label=""
 
     if "fig" in kwargs and "ax" in kwargs:
-        fig, ax = kwargs["fig"], kwargs["ax"]
+        fig, ax=kwargs["fig"], kwargs["ax"]
         kwargs.pop("fig")
         kwargs.pop("ax")
-        return_fig = False
-        figtext = None
+        return_fig=False
+        figtext=None
     else:
-        fig, ax = plt.subplots(figsize=(8, 4.5))
-        return_fig = True
+        fig, ax=plt.subplots(figsize=(8, 4.5))
+        return_fig=True
 
     # Actual plotting
     ax.plot(xdata, ydata, label=label, *args, **kwargs)
@@ -188,7 +195,7 @@ def Plot(xdata, ydata, xkey, ykey, *args, **kwargs):
 
     if len(fig.axes) == 1:
         fig.tight_layout()
-        #fig.tight_layout(rect=[0.01, 0.01, 1, 0.95])
+        # fig.tight_layout(rect=[0.01, 0.01, 1, 0.95])
     else:
         pass
 
@@ -208,25 +215,25 @@ def create_grid(n):
     """
 
     if n % 2 == 0:
-        N = n//2
-        fig, ax = plt.subplots(N, 2, figsize=(16, N*4.5))
-        axes = ax.flatten().tolist()
+        N=n//2
+        fig, ax=plt.subplots(N, 2, figsize=(16, N*4.5))
+        axes=ax.flatten().tolist()
     else:
-        N = n//2+1
-        s = (N, 4)
-        fig, ax = plt.subplots(N, 2, figsize=(16, N*4.5))
-        axes = []
-        loc = (0, 0)
+        N=n//2+1
+        s=(N, 4)
+        fig, ax=plt.subplots(N, 2, figsize=(16, N*4.5))
+        axes=[]
+        loc=(0, 0)
         for i in range(n):
 
             if i != 0:
                 if i != n-1:
                     if int(loc[1]) == 0:
-                        loc = (loc[0], 2)
+                        loc=(loc[0], 2)
                     elif int(loc[1]) == 2:
-                        loc = (loc[0]+1, 0)
+                        loc=(loc[0]+1, 0)
                 else:
-                    loc = (N-1, 1)
+                    loc=(N-1, 1)
             else:
                 pass
             axes.append(plt.subplot2grid(s, loc, colspan=2, fig=fig))
