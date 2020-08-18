@@ -123,9 +123,9 @@ def Plot(xdata, ydata, xkey, ykey, *args, **kwargs):
                     if key in legend_labels:
                         labels.append(legend_labels[key] % (parameters[key]))
                     else:
-                        labels.append(str(parameters[key]))
+                        labels.append(parameters[key])
                 else:
-                    raise TypeError("parameters must be strings")
+                    labels.append(str(parameters[key]))
             label = ", ".join(labels)
             label_size = len(labels)
             if label_size <= 1:
