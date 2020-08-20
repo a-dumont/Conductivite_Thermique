@@ -386,7 +386,7 @@ class mywindow(QtWidgets.QMainWindow):
         canvas.figure.add_axes(ax)
         canvas.ax.clear()
         canvas.draw()
-        if hasattr(self,"parameters_menu") is True:
+        if hasattr(self, "parameters_menu") is True:
             for i in self.parameters_menu.actions():
                 if i.isChecked() is True:
                     i.setChecked(False)
@@ -567,8 +567,13 @@ class mywindow(QtWidgets.QMainWindow):
         return
 
 
-if __name__ == "__main__":
+def main():
     app = QtWidgets.QApplication([])
     application = mywindow()
     application.show()
     sys.exit(app.exec())
+    return
+
+
+if __name__ == "__main__":
+    main()
