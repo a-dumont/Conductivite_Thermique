@@ -363,11 +363,15 @@ def find_sample(filename, header=None):
             sample = sample.replace(H+"T", "")
             sample = sample.replace(mount, "")
             sample = sample.replace("Data", "")
-            sample = re.search(r"[\d\w]{4,}", sample)
-            if sample is not None:
-                sample = sample.group()
+            Sample = re.search(r"[\d\w]{4,}", sample)
+            if Sample is not None:
+                sample = Sample.group()
             else:
-                pass
+                Sample = re.search(r"[\d\w]{3,}", sample)
+                if Sample is not None:
+                    sample = Sample.group()
+                else:
+                    sample = "Unknown"
     else:
         pass
 
