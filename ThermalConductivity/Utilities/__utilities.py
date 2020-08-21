@@ -415,7 +415,10 @@ def find_probe(filename, header):
             for k in keys:
                 if h.find(k) != -1:
                     probe = h.strip().split("\t")[-1]
-                    break
+                    if probe in keys:
+                        pass
+                    else:
+                        probe = None
                 else:
                     pass
 
